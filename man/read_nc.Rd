@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_nc.R
 \name{read_nc}
 \alias{read_nc}
-\title{read_nc}
+\title{Read netCDF file containing the gridded data.}
 \usage{
 read_nc(
   varname,
