@@ -136,12 +136,12 @@ show_poly <- function(poly){
   ggplot2::ggplot(data = world) +
     ggplot2::geom_sf(fill ="antiquewhite") +
     # Add polygon
-    ggplot2::geom_sf(data=poly, colour = "red", linetype=2)+
+    ggplot2::geom_sf(data=poly, colour = "red", fill = NA, linetype=2)+
     # Zoom on the gulf and estuary
     ggplot2::coord_sf(xlim = c(-71, -53.5), ylim = c(45, 52), expand = FALSE)+
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::ggtitle("Showing the polygon as red dashed line")
+    ggplot2::ggtitle("Showing the polygon as red dashed line") +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5),
       panel.background = ggplot2::element_rect(fill = "aliceblue"))
