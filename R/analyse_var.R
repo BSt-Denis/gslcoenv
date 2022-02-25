@@ -5,7 +5,7 @@
 #'
 #' @param var_list  list containing the variable extracted from read_nc
 #' @param op operations to perform on the data, character or list of characters
-#' Operations are "mean","min","max","med" for median, "std" for standard
+#' Operations are "mean","min","max","med" for median, "sd" for standard
 #' deviation, "prct" for percentile, "all" for all of the previous.
 #'
 #' @param dims Dimensions to operate the analysis. "xy" | "t". "xy" return a
@@ -35,12 +35,17 @@ stat_var <- function(var_list, op, dims, prct = c(0.1,0.9)){
     dims = c(1,2)
     out_list[["longitude"]] = var_list$longitude
     out_list[["latitude"]] = var_list$latitude
-    } else if(dims == "t"){
+    }
+  else if(dims == "t"){
     dims = c(3)
     out_list[["time"]] = var_list$time
-  } else {
+  }
+  else {
     stop("dims argument must be either NA, 'xy' or 't'")
   }
+
+  # Number of valid observations
+  out_list[["nobs"]] = apply(var_list$data, dims, function(x) length(which(!is.na(x) | !is.nan(x))))
 
   # Apply mean over selected dimensions
   if("mean" %in% op | "all" %in% op){
@@ -65,7 +70,7 @@ stat_var <- function(var_list, op, dims, prct = c(0.1,0.9)){
   }
 
   # Standard Deviation
-  if("std" %in% op | "all" %in% op){
+  if("sd" %in% op | "all" %in% op){
   out_list[["std"]] = apply(var_list$data, dims, function(x) stats::sd(x,na.rm=TRUE))
   }
 
