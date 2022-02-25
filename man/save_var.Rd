@@ -2,7 +2,7 @@
 % Please edit documentation in R/save_var.R
 \name{save_var}
 \alias{save_var}
-\title{save_var}
+\title{Save variable in a local file}
 \usage{
 save_var(var_list, savepath)
 }
@@ -13,11 +13,11 @@ save_var(var_list, savepath)
 determined by the extension of this argument.}
 }
 \description{
-Function that save a variable list created by read_nc or
-load_var in different format.
+Function that save a variable list created by \code{\link{read_nc}} or
+\code{\link{load_var}} in csv or nc format.
 }
 \examples{
 \dontrun{
-save_var(data,"/home/bruno/test_data.nc",format = "nc")}
+save_var(data,"/home/bruno/test_data.nc"}
 
 }
