@@ -10,7 +10,7 @@ stat_var(var_list, op, dims, prct = c(0.1, 0.9))
 \item{var_list}{list containing the variable extracted from read_nc}
 
 \item{op}{operations to perform on the data, character or list of characters
-Operations are "mean","min","max","med" for median, "std" for standard
+Operations are "mean","min","max","med" for median, "sd" for standard
 deviation, "prct" for percentile, "all" for all of the previous.}
 
 \item{dims}{Dimensions to operate the analysis. "xy" | "t". "xy" return a
