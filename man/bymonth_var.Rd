@@ -2,18 +2,18 @@
 % Please edit documentation in R/bymonth_var.R
 \name{bymonth_var}
 \alias{bymonth_var}
-\title{Extract variable list data  according to specified months}
+\title{Extract data from a variable list according to specified months}
 \usage{
 bymonth_var(var_list, month_name)
 }
 \arguments{
 \item{var_list}{var_list created or loaded by this package}
 
-\item{month_name}{Name of the months to use for extraction. Either character
-or vector of character}
+\item{month_name}{Name of the months to use for extraction. Either characters
+or vector of characters}
 }
 \value{
-var_list containing data for the specified month
+var_list containing data of the specified month
 }
 \description{
 Extract data from a var_list by specifying which month the data
