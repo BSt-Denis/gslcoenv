@@ -1,4 +1,5 @@
-#' @title read_nc
+#' @title Read netCDF file containing the gridded data.
+#'
 #' @description This function read the .nc file associated with the varname
 #' argument, extract the data and slice it according to specified arguments.
 #' The function return a list containing the sliced data, its coordinates and
