@@ -17,9 +17,10 @@ info_var <- function(ls) {
     stop("ls argument must be a list. typeof(ls) == list")
   }
   # Print information extracted from variable list ls.
-  print(paste0("Variable name = ",ls$name))
+  print(paste0("Variables = ",paste0(c(ls$variables),collapse=",")))
   print(paste0("Shape = (",paste0(c(ls$shape),collapse=","),")" ))
   print(paste0("Dimensions = (",paste0(c(ls$dims),collapse=","),")"))
   print(paste0("Units = ",ls$units))
   print(paste0("Data Memory = ",utils::object.size(ls$data)," bytes"))
+  print(paste0("NetCDF variable name = ", ls$nc_var))
 }

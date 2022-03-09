@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' save_var(data,"/home/bruno/test_data.nc"}
+#' save_var(var_list,"/home/bruno/test_data.nc"}
 #'
 save_var <- function(var_list, savepath){
 
@@ -34,33 +34,36 @@ save_var <- function(var_list, savepath){
 
     # Spatial Dimensions
     if("latitude" %in% names(var_list) & "longitude" %in% names(var_list)){
-    x <- ncdf4::ncdim_def( "x", "index", as.integer(1:length(var_list$longitude[,1])))
-    y <- ncdf4::ncdim_def( "y", "index", as.integer(1:length(var_list$longitude[1,])))
+      x <- ncdf4::ncdim_def( "x", "index", as.integer(1:length(var_list$longitude[,1])))
+      y <- ncdf4::ncdim_def( "y", "index", as.integer(1:length(var_list$longitude[1,])))
 
-    # Spatial coordinates
-    longitude <- ncdf4::ncvar_def("longitude", "degree_east",  list(x,y), NA)
-    latitude <- ncdf4::ncvar_def("latitude", "degree_north",  list(x,y), NA)
-    nc_dim_list = append(nc_dim_list,c(list(x),list(y)))
-    nc_var_list = append(nc_var_list,c(list(longitude),list(latitude)))
+      # Spatial coordinates
+      longitude <- ncdf4::ncvar_def("longitude", "degree_east",  list(x,y), NA)
+      latitude <- ncdf4::ncvar_def("latitude", "degree_north",  list(x,y), NA)
+      nc_dim_list = append(nc_dim_list,c(list(x),list(y)))
+      nc_var_list = append(nc_var_list,c(list(longitude),list(latitude)))
     }
 
     # Time coordinates
     if("time" %in% names(var_list)){
-    t <- ncdf4::ncdim_def( "time", "seconds since 1970-01-01", as.numeric(var_list$time)*86400, unlim=TRUE)
-    nc_dim_list = append(nc_dim_list,list(t))
+      t <- ncdf4::ncdim_def( "time", "seconds since 1970-01-01", as.numeric(var_list$time)*86400, unlim=TRUE)
+      nc_dim_list = append(nc_dim_list,list(t))
     }
 
     # Create variables
-    var_id <- ncdf4::ncvar_def(var_list$name,  var_list$units,  nc_dim_list, NA)
-    nc_var_list = append(nc_var_list,list(var_id))
+    for(varname in var_list$variables){
+      var_id <- ncdf4::ncvar_def(varname,  var_list$units,  nc_dim_list, NA)
+      nc_var_list = append(nc_var_list,list(var_id))
+    }
 
     # Create new files
     ncnew <- ncdf4::nc_create(savepath, nc_var_list, force_v4 = TRUE)
 
     # Write Data to variables
     # Variables
-    ncdf4::ncvar_put(ncnew, var_id, var_list$data)
-    ncdf4::ncatt_put(ncnew, 0, "main_variable", var_list$name)
+    for(varname in var_list$variables){
+      ncdf4::ncvar_put(ncnew, varname, var_list[[varname]])
+    }
 
     # Time related global attributes
     if("time" %in% names(var_list)){
@@ -79,6 +82,8 @@ save_var <- function(var_list, savepath){
     }
 
     # Write Global Attributes
+    ncdf4::ncatt_put(ncnew, 0, "data_var", paste0(c(var_list$variables),collapse=","))
+    ncdf4::ncatt_put(ncnew, 0, "original_nc_var", var_list$nc_var)
     ncdf4::ncatt_put(ncnew, 0, "creation_date", strftime(Sys.time()))
     ncdf4::ncatt_put(ncnew, 0, "created_by", "The gslcoenv R package")
     ncdf4::ncatt_put(ncnew, 0, "original_data", "Interpolated data by Peter Galbraith from PMZA monitoring missions and other scientific missions carried out by the DFO section of Quebec")

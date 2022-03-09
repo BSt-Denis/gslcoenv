@@ -33,13 +33,13 @@ load_var <- function(loadpath){
     # Get variable names from netCDF file
     nc_variable = names(nc$var)
 
-    # Get the main variable name by exclusion
-    main_var <- setdiff(nc_variable,c("longitude","latitude","time"))
+    # Get the main variable name by excluding dimensions and coordinates names
+    var_list[["variables"]] <- setdiff(nc_variable,c("longitude","latitude","time"))
 
     # Add main variable to variable list
-    var_list[["name"]] <- main_var
-    var_list[["data"]] <- ncdf4::ncvar_get(nc,varid = main_var)
-
+    for(varname in var_list$variables){
+      var_list[[varname]] <- ncdf4::ncvar_get(nc,varid = varname)
+    }
     # Add dimensions and coordinates
     # Longitude
     if("longitude" %in% nc_variable){
@@ -61,13 +61,16 @@ load_var <- function(loadpath){
     }
 
     # Add shape
-    var_list[["shape"]] <- dim(var_list$data)
+    var_list[["shape"]] <- dim(var_list[[varname]])
 
     # Add dims
     var_list[["dims"]] <- dim_vec
 
     # Add units
-    var_list[["units"]] <- ncdf4::ncatt_get(nc, main_var, attname="units")$value
+    var_list[["units"]] <- ncdf4::ncatt_get(nc, var_list$variables[1], attname="units")$value
+
+    # Add original netcdf variable name
+    var_list[["nc_var"]] <- ncdf4::ncatt_get(nc, 0, attname="original_nc_var")$value
 
     # Close file
     ncdf4::nc_close(nc)

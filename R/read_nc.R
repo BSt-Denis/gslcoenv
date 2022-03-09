@@ -104,10 +104,10 @@ read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data = 
   ms_grid = TauP.R::meshgrid(valid_lat,valid_lon)
 
   # Generate a data list
-  var_data = list(varname, var_nc, ms_grid$y, ms_grid$x, time_data, dim(var_nc), c("longitude","latitude","time"), ncdf4::ncatt_get(nc, varname, attname="units")$value)
+  var_data = list(varname, var_nc, ms_grid$y, ms_grid$x, time_data, dim(var_nc), c("longitude","latitude","time"), ncdf4::ncatt_get(nc, varname, attname="units")$value, varname)
 
   # Add symbolic names to data list
-  names(var_data) = c("name","data","longitude","latitude","time","shape","dims","units")
+  names(var_data) = c("variables",varname,"longitude","latitude","time","shape","dims","units","nc_var")
 
   # Close .nc file
   ncdf4::nc_close(nc)

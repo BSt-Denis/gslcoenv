@@ -3,7 +3,7 @@
 #' @description Perform one or multiple statistical analysis along the time or
 #' spatial dimension.
 #'
-#' @param var_list  list containing the variable extracted from read_nc
+#' @param var_list  list containing the variable extracted from \code{\link{read_nc}} or \code{\link{load_var}}
 #' @param op operations to perform on the data, character or list of characters
 #' Operations are "mean","min","max","med" for median, "sd" for standard
 #' deviation, "prct" for percentile, "all" for all of the previous.
@@ -17,8 +17,8 @@
 #' the percentile, 0.1 = 10%. Default = c(0.1,0.9). Only works if "prct" or
 #' "all" is include in op. argument.
 #'
-#' @return list containing the result from the statistical analysis, the unit
-#' and the dimensions
+#' @return list containing the result from the statistical analysis, the unit,
+#' the dimensions and the number of valid observations for each points
 #'
 #' @export
 #' @examples \dontrun{temp <- stat_var(var_list,c("mean","min"),"xy")
@@ -27,59 +27,74 @@ stat_var <- function(var_list, op, dims, prct = c(0.1,0.9)){
 
   # Create empty list to return
   out_list = list()
-  out_list[["name"]] = var_list$name
-  out_list[["units"]] = var_list$units
+  var_vec = vector()
 
   # Adjust proper dims to analyze
   if( dims == 'xy'){
     dims = c(1,2)
     out_list[["longitude"]] = var_list$longitude
     out_list[["latitude"]] = var_list$latitude
+    out_list[["shape"]] = dim(out_list$longitude)
+    out_list[["dims"]] = c("longitude","latitude")
     }
   else if(dims == "t"){
     dims = c(3)
     out_list[["time"]] = var_list$time
+    out_list[["shape"]] = dim(out_list$time)
+    out_list[["dims"]] = c("time")
   }
   else {
-    stop("dims argument must be either NA, 'xy' or 't'")
+    stop("dims argument must be either 'xy' or 't'")
   }
 
   # Number of valid observations
-  out_list[["nobs"]] = apply(var_list$data, dims, function(x) length(which(!is.na(x) | !is.nan(x))))
+  out_list[["nobs"]] = apply(var_list[[var_list$nc_var]], dims, function(x) length(which(!is.na(x) | !is.nan(x))))
+  var_vec = append(var_vec,"nobs")
 
   # Apply mean over selected dimensions
   if("mean" %in% op | "all" %in% op){
-   out_list[["mean"]] = apply(var_list$data, dims, function(x) mean(x,na.rm=TRUE))
+   out_list[["mean"]] = apply(var_list[[var_list$nc_var]], dims, function(x) mean(x,na.rm=TRUE))
+   var_vec = append(var_vec,"mean")
   }
 
   # Min
   if("min" %in% op | "all" %in% op){
-    out_list[["min"]] = apply(var_list$data, dims, function(x) min(x,na.rm=TRUE))
+    out_list[["min"]] = apply(var_list[[var_list$nc_var]], dims, function(x) min(x,na.rm=TRUE))
     out_list$min[sapply(out_list$min, is.infinite)] <- NaN
+    var_vec = append(var_vec,"min")
   }
 
   # Max
   if("max" %in% op | "all" %in% op){
-    out_list[["max"]] = apply(var_list$data, dims, function(x) max(x,na.rm=TRUE))
+    out_list[["max"]] = apply(var_list[[var_list$nc_var]], dims, function(x) max(x,na.rm=TRUE))
     out_list$max[sapply(out_list$max, is.infinite)] <- NaN
+    var_vec = append(var_vec,"max")
   }
 
   # Median
   if("med" %in% op | "all" %in% op){
-    out_list[["med"]] = apply(var_list$data, dims, function(x) stats::median(x,na.rm=TRUE))
+    out_list[["med"]] = apply(var_list[[var_list$nc_var]], dims, function(x) stats::median(x,na.rm=TRUE))
+    var_vec = append(var_vec,"med")
   }
 
   # Standard Deviation
   if("sd" %in% op | "all" %in% op){
-  out_list[["std"]] = apply(var_list$data, dims, function(x) stats::sd(x,na.rm=TRUE))
+  out_list[["sd"]] = apply(var_list[[var_list$nc_var]], dims, function(x) stats::sd(x,na.rm=TRUE))
+  var_vec = append(var_vec,"sd")
   }
 
   # Percentile
   if("prct" %in% op | "all" %in% op){
     for(i in prct){
-      out_list[[paste0("pct",i*100)]] = apply(var_list$data, dims, function(x) stats::quantile(x,i,na.rm=TRUE))
+      out_list[[paste0("pct",i*100)]] = apply(var_list[[var_list$nc_var]], dims, function(x) stats::quantile(x,i,na.rm=TRUE))
+      var_vec = append(var_vec,paste0("pct",i*100))
     }
   }
+
+  # Add element into output list
+  out_list[["variables"]] = var_vec
+  out_list[["units"]] = var_list$units
+  out_list[["nc_var"]] = var_list$nc_var
 
   return(out_list)
 }
