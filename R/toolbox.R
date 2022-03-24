@@ -1,6 +1,6 @@
 slice_xy <- function(vl, longitude, latitude){
   # Check for longitude and latitude coodinates, and dimensions of data
-  stopifnot("longitude" %in% names(var_list),"latitude" %in% names(var_list))
+  stopifnot("longitude" %in% names(vl),"latitude" %in% names(vl))
 
   # Get index of valid coordinates
   valid_lon_id = which(dplyr::between(vl$longitude[,1], min(longitude), max(longitude)))
