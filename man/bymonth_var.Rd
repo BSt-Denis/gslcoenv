@@ -4,13 +4,13 @@
 \alias{bymonth_var}
 \title{Extract data from a variable list according to specified months}
 \usage{
-bymonth_var(var_list, month_name)
+bymonth_var(var_list, month_num)
 }
 \arguments{
 \item{var_list}{var_list created or loaded by this package}
 
-\item{month_name}{Numeric number of the month (11 = november). Either numeric
-or vector numeric element}
+\item{month_num}{Numeric number of the month (11 = november). Either numeric
+or vector of numeric elements}
 }
 \value{
 var_list containing data of the specified month
