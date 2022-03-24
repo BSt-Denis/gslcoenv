@@ -21,6 +21,6 @@ info_var <- function(ls) {
   print(paste0("Shape = (",paste0(c(ls$shape),collapse=","),")" ))
   print(paste0("Dimensions = (",paste0(c(ls$dims),collapse=","),")"))
   print(paste0("Units = ",ls$units))
-  print(paste0("Data Memory = ",utils::object.size(ls$data)," bytes"))
+  print(paste0("Data Memory = ",utils::object.size(ls)," bytes"))
   print(paste0("NetCDF variable name = ", ls$nc_var))
 }
