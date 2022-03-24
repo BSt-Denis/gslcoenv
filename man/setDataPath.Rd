@@ -4,10 +4,11 @@
 \alias{setDataPath}
 \title{Set the path to the folder where the data are stored}
 \usage{
-setDataPath(path_to_data)
+setDataPath(path_to_data = NA)
 }
 \arguments{
-\item{path_to_data}{Path to the default data folder}
+\item{path_to_data}{Path to the default data folder, if NA, the stored default
+path is displayed.}
 }
 \description{
 Modifies the default path of the data folder in the
