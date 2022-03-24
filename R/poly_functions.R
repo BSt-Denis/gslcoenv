@@ -40,6 +40,7 @@ create_poly <- function(longitude, latitude, crs = 4326){
   return(pol)
 }
 
+
 #' @title Save polygon on local disk
 #'
 #' @description Save polygon on the local computer in various format
@@ -86,6 +87,7 @@ save_poly <- function(pol, savepath, polyname=NA){
 
 }
 
+
 #' @title Load a polygon from file
 #'
 #' @description Load a a polygon from a file. For the moment, only .csv and .rdata
@@ -121,6 +123,7 @@ load_poly <- function(load_path, lon_name="longitude", lat_name="latitude"){
   return(pol)
 }
 
+
 #' @title Show polygon on the map
 #'
 #' @description Show a polygon on the map of the estuary and the gulf of
@@ -154,13 +157,13 @@ show_poly <- function(pol){
 #' @description Mask and slice the data of a var_list that are outside the polygon
 #'
 #' @param var_list list containing the variables extracted from \code{\link{read_nc}} or \code{\link{load_var}}
-#' @param pol polygon of class "sf" or "sfc"
+#' @param pol polygon of class "sf", "sfc" or "sfg"
 #'
-#' @return a list with data masked outside the polygon
+#' @return var_list containing the variables, coordinates and metadata of the selected data
 #' @export
 #'
-#' @examples \dontrun{masked_list = inside_poly(bottom_temp, polygone)}
-inside_poly <- function(var_list,pol){
+#' @examples \dontrun{masked_list = inpolygon_var(var_list, polygone)}
+inpolygon_var <- function(var_list,pol){
 
   # Check for longitude and latitude coodinates, and dimensions of data
   stopifnot("longitude" %in% names(var_list),"latitude" %in% names(var_list))
@@ -189,22 +192,23 @@ inside_poly <- function(var_list,pol){
   return(var_list)
 }
 
-#' @title Select the data inside a distance of a point
+
+#' @title Select the data within a distance of a point
 #'
-#' @description Select the data that is located inside a specified distance of a
-#' selected geographic coordinate.
+#' @description Select the data that is located within a certain distance of a
+#' specified geographic coordinate.
 #'
 #' @param var_list list containing the variables extracted from \code{\link{read_nc}} or \code{\link{load_var}}
 #' @param lon longitude coordinate of the point
 #' @param lat latitude coordinate of the point
-#' @param dist distance in meter of the center of the point
+#' @param dist distance in meter of the center of the point to draw the polygone border,
+#'  default is 5000 meters
 #'
-#' @return var_list
-#'
+#' @return var_list containing the variables, coordinates and metadata of the selected data
 #' @export
 #'
-#' @examples \dontrun{masked_list = within_dist(bottom_temp, lon=-65, lat=49, dist=5000)}
-within_dist <- function(var_list, lon, lat, dist=5000){
+#' @examples \dontrun{masked_list = indistance_polygon(var_list, lon=-65, lat=49, dist=5000)}
+indistance_var <- function(var_list, lon, lat, dist=5000){
 
   # Check for longitude and latitude coodinates, and dimensions of data
   stopifnot("longitude" %in% names(var_list),"latitude" %in% names(var_list))
