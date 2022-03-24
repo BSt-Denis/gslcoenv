@@ -20,10 +20,10 @@ Polygon as sfc class defined in "sf" package is extension is .csv.
 Return a list comprising a polygon of sfc class.
 }
 \description{
-Load a a polygon from a file. For the moment, only .csv and .rdata
+Load a polygon from a file. For the moment, only .csv and .rdata
 are implemented. The loading method is defined by the filename extension.
 }
 \examples{
-\dontrun{polygone = load_poly("/home/bruno/<save directory>/save_poly.rdata")}
+\dontrun{polygone = load_poly("/home/.../<path_to_save_directory>/save_poly.rdata")}
 
 }

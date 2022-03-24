@@ -62,7 +62,7 @@ viz_map(stat_list$mean,stat_list)
 save_var(new_stat_list,"C:\users\..\..\data\mean_bottom_temperature.nc")
 ```
 ## var_list 
-A var_list, is a object of class "list"" that carries one or many variables such as bottom temperature, the thickness of the intermediate layer or the result of statistical analysis (mean, max, median, etc.). It contains the data, its coordinates and some useful metadata. 
+A var_list, is a object of class "list" that carries one or many variables such as bottom temperature, the thickness of the intermediate layer or the result of statistical analysis (mean, max, median, etc.). It contains the data, its coordinates and some useful metadata. 
 
 Fields in var_list : 
 1. variables : list of variable names in the var_list
