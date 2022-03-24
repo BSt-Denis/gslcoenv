@@ -9,51 +9,69 @@
 #'
 #' @examples \dontrun{viz_ts(temp$data, temp)}
 viz_ts <- function(data,var_list){
+  # Check for time dimensions
+  stopifnot("time" %in% names(var_list))
+
+  # Plot time series
   graphics::plot(var_list$time, data, type="l", main = paste0("Timeserie from ",var_list$time[1]," to ",utils::tail(var_list$time,1)))
 }
 
-# viz_map <- function(data,var_list, timeid = NA, cmap = cmocean::cmocean("thermal")){
-#
-#   # Reduce 3D data to 2D
-#   if(length(dim(data)) == 3){data = data[,,timeid]}
-#
-#   # Plot data
-#   world = rnaturalearth::ne_countries(scale = "medium", returnclass ="sf")
-#
-#   ggplot2::ggplot(data = world) +
-#     ggplot2::geom_sf(fill ="antiquewhite") +
-#     ggplot2::geom_contour_filled(data=as.data.frame(data), ggplot2::aes(x=var_list$longitude, y = var_list$latitude))+
-#     ggplot2::coord_sf(xlim = c(-71, -53.5), ylim = c(45, 52), expand = FALSE)+
-#     ggplot2::xlab("Longitude") +
-#     ggplot2::ylab("Latitude") +
-#     ggplot2::ggtitle("Map of the 2D data")+
-#   ggplot2::theme(
-#     panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5),
-#     panel.background = ggplot2::element_rect(fill = "aliceblue"))
-#
-# }
 
-#' @title Plot 2D data on a map ** Not fully implementend yet
+#' @title Plot data on a map of the estuary
 #'
-#' @param data Data to be plotted
-#' @param var_list var_lsit containing informations about the data
-#' @param timeid time index in case of 3D data, only works if length(dims(data)) > 2
-#' @param cmap colormap used to plot the data, default = thermal from the
-#' \code{\link[cmocean]{cmocean}} package.
+#' @description Create a map displaying the data on the estuary with a colormap
+#' from the \code{\link[cmocean]{cmocean}} package.
+#'
+#' @param data name of variable to plot
+#' @param var_list var_list containing coordinates and dimensions of the data
 #'
 #' @export
 #'
 #' @examples
-#' \dontrun{viz_map(temp$data,temp,timeid=1)}
-viz_map <- function(data,var_list, timeid = NA, cmap = cmocean::cmocean("thermal")){
+#' \dontrun{viz_map(vl$bottom_temperature[,,1],vl)}
+viz_map <- function(data, var_list){
 
-  # Reduce 3D data to 2D
-  if(length(dim(data)) == 3){data = data[,,timeid]}
+  # Check for longitude and latitude coodinates, and dimensions of data
+  stopifnot("longitude" %in% names(var_list),"latitude" %in% names(var_list), length(dim(data)) == 2)
 
-  # Plot data
-  graphics::filled.contour(rev(var_list$longitude[,1]), var_list$latitude[1,],apply(var_list$data[,,1],2,rev),
-                 nlevels = 10, color.palette = cmocean::cmocean("thermal"),
-                 plot.title = {graphics::par(cex.main=1);graphics::title(main="Visualization of 2D data",
-                                                                xlab = "Longitude", ylab="Laitutde")},
-                 key.title = {graphics::par(cex.main=0.5);graphics::title(main=paste0(var_list$name,"\n","[",var_list$units,"]"))})
+  # Choose the right colorbar
+  if(var_list[["nc_var"]] == "bottom_temperature"){
+    colorname = "thermal"
+    coldir = 1
+  } else if(var_list[["nc_var"]] == "bottom_salinity"){
+    colorname = "haline"
+    coldir=-1
+  } else if(var_list[["nc_var"]] == "C1" | var_list[["nc_var"]] == "C2"){
+    colorname = "deep"
+    coldir = 1
+  } else{
+    colorname = "thermal"
+    coldir = -1
+  }
+
+  # Convert data and coordinates to a dataframe
+  df <- data.frame(as.vector(var_list$longitude),as.vector(var_list$latitude),as.vector(data))
+  names(df) = c("longitude","latitude","data")
+
+  # Get world rasters
+  world = rnaturalearth::ne_countries(scale = "medium", returnclass ="sf")
+
+  # Plotting
+  ggplot2::ggplot(data = world) +
+    ggplot2::geom_sf(fill ="antiquewhite") +
+    ggplot2::coord_sf(xlim = c(min(var_list$longitude)-0.07, max(var_list$longitude)+0.07),
+                      ylim = c(min(var_list$latitude)-0.05, max(var_list$latitude)+0.05), expand = FALSE)+
+    # Contour filled
+    ggplot2::geom_contour_filled(data = df, ggplot2::aes(x=longitude, y=latitude, z=data))+
+    cmocean::scale_fill_cmocean(name = colorname, discrete = TRUE, direction = coldir) +
+
+    # Add grid
+    ggplot2::theme(
+      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5))
+
+
+
+
+
+
 }
