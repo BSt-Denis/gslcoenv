@@ -61,6 +61,38 @@ viz_map(stat_list$mean,stat_list)
 # Save the data in a netcdf files
 save_var(new_stat_list,"C:\users\..\..\data\mean_bottom_temperature.nc")
 ```
+## var_list 
+A var_list, is a object of class "list"" that carries one or many variables such as bottom temperature, the thickness of the intermediate layer or the result of statistical analysis (mean, max, median, etc.). It contains the data, its coordinates and some useful metadata. 
+
+Fields in var_list : 
+1. variables : list of variable names in the var_list
+2. <variable name> : data of the variable
+3. longitude : 2d array containing the longitude coordinates
+4. latitude : 2d array containing the latitude coordinates
+5. time : vector of "Date object" containing the timestamp
+6. shape : vector of integer containing the length of each dimensions
+7. dims : vector of character containing the name of the dimensions
+8. units : units of the variables
+9. nc_var : name of the variable extracted from the netCDF file
+
+As for a list in R, there is three ways to access fields in a var_list : 
+``` r
+# 1. Calling using $ sign
+var_list$longitude
+```
+It returns the element in the same form as they were insert (list, matrix, array, etc.)
+
+``` r
+# 2. Calling using single brackets and quotation mark
+var_list["longitude"] 
+```
+It always returns the element as a list
+
+``` r
+# 3. Calling using double brackets and quotation mark
+var_list[["longitude"]] 
+```
+It returns the element in the same form as they were insert (list, matrix, array, etc.)
 
 ## Troubleshooting
 
