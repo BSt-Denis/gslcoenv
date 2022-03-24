@@ -2,12 +2,12 @@
 % Please edit documentation in R/poly_functions.R
 \name{show_poly}
 \alias{show_poly}
-\title{Show a selected polygon on the map}
+\title{Show polygon on the map}
 \usage{
-show_poly(poly)
+show_poly(pol)
 }
 \arguments{
-\item{poly}{a polygone of either "sf", "sfc" class or any polygone
+\item{pol}{a polygone of either "sf", "sfc" class or any polygone
 with crs attributes}
 }
 \description{

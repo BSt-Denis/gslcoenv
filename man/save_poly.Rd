@@ -4,10 +4,10 @@
 \alias{save_poly}
 \title{Save polygon on local disk}
 \usage{
-save_poly(poly, savepath, polyname = NA)
+save_poly(pol, savepath, polyname = NA)
 }
 \arguments{
-\item{poly}{Polygon as sf | sfc class from the R package "sf"}
+\item{pol}{Polygon as sf | sfc class from the R package "sf"}
 
 \item{savepath}{Path to save the polygone}
 

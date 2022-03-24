@@ -2,23 +2,19 @@
 % Please edit documentation in R/viz_functions.R
 \name{viz_map}
 \alias{viz_map}
-\title{Plot 2D data on a map ** Not fully implementend yet}
+\title{Plot data on a map of the estuary}
 \usage{
-viz_map(data, var_list, timeid = NA, cmap = cmocean::cmocean("thermal"))
+viz_map(data, var_list)
 }
 \arguments{
-\item{data}{Data to be plotted}
+\item{data}{name of variable to plot}
 
-\item{var_list}{var_lsit containing informations about the data}
-
-\item{timeid}{time index in case of 3D data, only works if length(dims(data)) > 2}
-
-\item{cmap}{colormap used to plot the data, default = thermal from the
-\code{\link[cmocean]{cmocean}} package.}
+\item{var_list}{var_list containing coordinates and dimensions of the data}
 }
 \description{
-Plot 2D data on a map ** Not fully implementend yet
+Create a map displaying the data on the estuary with a colormap
+from the \code{\link[cmocean]{cmocean}} package.
 }
 \examples{
-\dontrun{viz_map(temp$data,temp,timeid=1)}
+\dontrun{viz_map(vl$bottom_temperature[,,1],vl)}
 }

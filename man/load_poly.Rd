@@ -10,10 +10,10 @@ load_poly(load_path, lon_name = "longitude", lat_name = "latitude")
 \item{load_path}{Path to load the file}
 
 \item{lon_name}{name given to the columns with the longitude component in
-the loaded file. Arguments only works for csv extension^}
+the loaded file. Arguments only works for csv file}
 
 \item{lat_name}{name given to the columns with the latitude component in
-the loaded file. Arguments only works for csv extension}
+the loaded file. Arguments only works for csv file}
 }
 \value{
 Polygon as sfc class defined in "sf" package is extension is .csv.

@@ -7,7 +7,7 @@
 stat_var(var_list, op, dims, prct = c(0.1, 0.9))
 }
 \arguments{
-\item{var_list}{list containing the variable extracted from read_nc}
+\item{var_list}{list containing the variable extracted from \code{\link{read_nc}} or \code{\link{load_var}}}
 
 \item{op}{operations to perform on the data, character or list of characters
 Operations are "mean","min","max","med" for median, "sd" for standard
@@ -23,8 +23,8 @@ the percentile, 0.1 = 10%. Default = c(0.1,0.9). Only works if "prct" or
 "all" is include in op. argument.}
 }
 \value{
-list containing the result from the statistical analysis, the unit
-and the dimensions
+list containing the result from the statistical analysis, the unit,
+the dimensions and the number of valid observations for each points
 }
 \description{
 Perform one or multiple statistical analysis along the time or

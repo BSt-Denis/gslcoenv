@@ -18,6 +18,6 @@ Function that save a variable list created by \code{\link{read_nc}} or
 }
 \examples{
 \dontrun{
-save_var(data,"/home/bruno/test_data.nc"}
+save_var(var_list,"/home/bruno/test_data.nc"}
 
 }

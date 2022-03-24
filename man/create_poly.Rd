@@ -15,12 +15,12 @@ create_poly(longitude, latitude, crs = 4326)
 \item{crs}{number or string representing a coordinate reference system (CRS)}
 }
 \value{
-Polygon as sfc class defined in "sf" package.
+Polygon of sfc class defined in "sf" package.
 }
 \description{
-Create polygon as class "sfc" form sf R package by provinding
+Create polygon as class "sfc" from sf package by provinding
 a list or vector of longitude and latitude. If the coordinates are projected
-on a defined crs. The crs can be provided to properly construct the polygon
+on a defined coordinate reference system, the crs can be provided to properly construct the polygon
 via the crs argument. If only two coordinates are given, a rectangle polygon
 is created using the two points as top left and right bottom corner.
 The coordinates doesn't need to close, the function take care of it for you.
