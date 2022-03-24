@@ -15,5 +15,5 @@ viz_ts(data, var_list)
 Function to visualize 1D data along time.
 }
 \examples{
-\dontrun{viz_ts(temp$data, temp)}
+\dontrun{viz_ts(var_list$bottom_temperature, var_list)}
 }

@@ -7,13 +7,15 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{viz_ts(temp$data, temp)}
+#' @examples \dontrun{viz_ts(var_list$bottom_temperature, var_list)}
 viz_ts <- function(data,var_list){
   # Check for time dimensions
   stopifnot("time" %in% names(var_list))
 
   # Plot time series
-  graphics::plot(var_list$time, data, type="l", main = paste0("Timeserie from ",var_list$time[1]," to ",utils::tail(var_list$time,1)))
+  graphics::plot(var_list$time, data, type="o",
+                 main = paste0("Timeserie from ",var_list$time[1]," to ",utils::tail(var_list$time,1)),
+                 xlab = "Time")
 }
 
 
@@ -53,14 +55,14 @@ viz_map <- function(data, var_list){
   df <- data.frame(as.vector(var_list$longitude),as.vector(var_list$latitude),as.vector(data))
   names(df) = c("longitude","latitude","data")
 
-  # Get world rasters
+  # Get world raster
   world = rnaturalearth::ne_countries(scale = "medium", returnclass ="sf")
 
   # Plotting
   ggplot2::ggplot(data = world) +
     ggplot2::geom_sf(fill ="antiquewhite") +
     ggplot2::coord_sf(xlim = c(min(var_list$longitude)-0.07, max(var_list$longitude)+0.07),
-                      ylim = c(min(var_list$latitude)-0.05, max(var_list$latitude)+0.05), expand = FALSE)+
+                      ylim = c(min(var_list$latitude)-0.05, max(var_list$latitude)+0.05), expand = TRUE)+
     # Contour filled
     ggplot2::geom_contour_filled(data = df, ggplot2::aes(x=longitude, y=latitude, z=data))+
     cmocean::scale_fill_cmocean(name = colorname, discrete = TRUE, direction = coldir) +
@@ -68,10 +70,4 @@ viz_map <- function(data, var_list){
     # Add grid
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5))
-
-
-
-
-
-
 }
