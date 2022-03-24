@@ -9,8 +9,8 @@ bymonth_var(var_list, month_name)
 \arguments{
 \item{var_list}{var_list created or loaded by this package}
 
-\item{month_name}{Name of the months to use for extraction. Either characters
-or vector of characters}
+\item{month_name}{Numeric number of the month (11 = november). Either numeric
+or vector numeric element}
 }
 \value{
 var_list containing data of the specified month
@@ -20,7 +20,7 @@ Extract data from a var_list by specifying which month the data
 should contain.
 }
 \examples{
-\dontrun{temp_june <- bymonth_var(total_temp,"june")
-temp_june_august <- bymonth_var(total_temp,c("june","august"))}
+\dontrun{temp_june <- bymonth_var(total_temp,6)
+temp_june_august <- bymonth_var(total_temp,c(06,08))}
 
 }
