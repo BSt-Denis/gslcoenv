@@ -90,7 +90,7 @@ save_poly <- function(pol, savepath, polyname=NA){
 
 #' @title Load a polygon from file
 #'
-#' @description Load a a polygon from a file. For the moment, only .csv and .rdata
+#' @description Load a polygon from a file. For the moment, only .csv and .rdata
 #' are implemented. The loading method is defined by the filename extension.
 #'
 #' @param load_path Path to load the file
@@ -104,7 +104,7 @@ save_poly <- function(pol, savepath, polyname=NA){
 #'
 #' @export
 #'
-#' @examples \dontrun{polygone = load_poly("/home/bruno/<save directory>/save_poly.rdata")}
+#' @examples \dontrun{polygone = load_poly("/home/.../<path_to_save_directory>/save_poly.rdata")}
 #'
 load_poly <- function(load_path, lon_name="longitude", lat_name="latitude"){
   # Rdata
