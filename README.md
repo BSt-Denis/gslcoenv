@@ -22,11 +22,16 @@ devtools::install_github("BSt-Denis/gslcoenv")
 at this location -> R:/Commun/Virginie Roy/Package_gslcoenv/data/
 
 2. Tell the package where to find the data on your local computer.
+
 ``` r
 # Import package
 library(gslcoenv)
 
+# For linux style path
 setDataPath("/home/.../.../folder_with_data/")
+
+# For Windows style path
+setDataPath("C:\\Users\\...\\...\\folder_with_data\\")
 ```
 3. Check if the package find the data
 ``` r
