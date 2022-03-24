@@ -29,9 +29,21 @@ bymonth_var <- function(var_list, month_name){
   # Get valid date index
   valid_date_id = which(monthName %in% month_name)
 
+  # Get valid time values
   var_list$time = var_list$time[valid_date_id]
-  var_list$data = var_list$data[,,valid_date_id]
-  var_list$shape = dim(var_list$data)
+
+  if("longitude" %in% var_list[["dims"]] & "latitude" %in% var_list[["dims"]]){
+    for (varname in var_list[["variables"]]){
+      var_list[[varname]] = var_list[[varname]][,,valid_date_id]
+    }
+    var_list$shape = dim(var_list[[var_list$variables[1]]])
+
+  } else {
+    for (varname in var_list[["variables"]]){
+      var_list[[varname]] = var_list[[varname]][valid_date_id]
+    }
+    var_list$shape = length(var_list[[var_list$variables[1]]])
+  }
 
   return(var_list)
 }
