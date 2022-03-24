@@ -32,17 +32,34 @@ setDataPath("/home/.../.../folder_with_data/")
 ``` r
 # List files found in the folder
 list_nc()
-
-# R will print the variables names in the console if everything is fine
 ```
+R will print the variables names in the console if everything is fine
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is an example showing the basic functionality of gslcoenv:
 
 ``` r
+# Import package gslcoenv into working environment
 library(gslcoenv)
-## basic example code
+
+# Extract data from netCDF file
+var_list = read_nc("bottom_temperature")
+
+# From var_list, slice data to conserve only those in august
+new_list = bymonth_var(var_list,8)
+
+# Calculate the mean of the bottom temperature for each grid points 
+stat_list = stat_var(new_list,"mean","xy")
+
+# Extract the mean bottom temperature in a radius of 10 km centered at -64 W and 48 N
+new_stat_list = indistance_var(stat_list, lon=-64, lat=48, 10000)
+
+# Show the map with the mean bottom temperature in a 10 km radius of -64 W and 48 N
+viz_map(stat_list$mean,stat_list)
+
+# Save the data in a netcdf files
+save_var(new_stat_list,"C:\users\..\..\data\mean_bottom_temperature.nc")
 ```
 
 ## Troubleshooting
