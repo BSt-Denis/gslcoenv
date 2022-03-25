@@ -1,8 +1,8 @@
 #' @title List the variables in the data folder
 #'
-#' @description List the variables in the default data folder set by
-#' \code{\link{setDataPath}} or information about a specified variable
-#' available in the default data folder.
+#' @description Print the variables in the default data folder set by
+#' \code{\link{setDataPath}}, or print information about the variable mentionned
+#' as the varname argument.
 #'
 #' @param varname Variable to extract information about. Default = NA. If NA,
 #' it print the available variable to be read by \code{\link{read_nc}}.
