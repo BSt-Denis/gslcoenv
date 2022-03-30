@@ -35,7 +35,7 @@ setDataPath("C:\\Users\\...\\...\\folder_with_data\\")
 ```
 3. Check if the package find the data
 ``` r
-# List files found in the folder
+# List variables found in the folder
 list_nc()
 ```
 R will print the variables names in the console if everything is fine
@@ -45,10 +45,10 @@ R will print the variables names in the console if everything is fine
 This is an example showing the basic functionality of gslcoenv:
 
 ``` r
-# Import package gslcoenv into working environment
+# Import package gslcoenv into working environment if not already imported
 library(gslcoenv)
 
-# Extract data from netCDF file
+# Import data from netCDF file
 var_list = read_nc("bottom_temperature")
 
 # From var_list, slice data to conserve only those in august
@@ -66,12 +66,36 @@ viz_map(stat_list$mean,stat_list)
 # Save the data in a netcdf files
 save_var(new_stat_list,"C:\users\..\..\data\mean_bottom_temperature.nc")
 ```
+
+This another example show how to select data that are inside a polygon
+``` r
+# Import package gslcoenv into working environment if not already imported
+library(gslcoenv)
+
+# Create a list of longitude and latitude coordinates
+lon = c(-69,-69,-67,-65,-65,-69)
+lat = c(45,49,48,48,45,45)
+
+# Create a polygon
+pol = create_poly(lon,lat)
+
+# Import data from NetCDF file
+var_list = read_nc("bottom_salinity")
+
+# Select data comprised within a polygon
+var_list = inpolygon_var(var_list,pol)
+
+# Display a map with the bottom temperature cropped by the polygon,
+viz_map(var_list$bottom_temperature[,,1], var_list)
+
+```
+
 ## var_list 
 A var_list, is a object of class "list" that carries one or many variables such as bottom temperature, the thickness of the intermediate layer or the result of statistical analysis (mean, max, median, etc.). It contains the data, its coordinates and some useful metadata. 
 
 Fields in var_list : 
 1. variables : list of variable names in the var_list
-2. <variable name> : data of the variable
+2. variable_name : data of the variable
 3. longitude : 2d array containing the longitude coordinates
 4. latitude : 2d array containing the latitude coordinates
 5. time : vector of "Date object" containing the timestamp
