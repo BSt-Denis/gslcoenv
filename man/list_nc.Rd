@@ -13,7 +13,7 @@ If varname is type character, information about the variable is print from
 the associated netcdf file global attributes.}
 }
 \description{
-List the variables in the default data folder set by
-\code{\link{setDataPath}} or information about a specified variable
-available in the default data folder.
+Print the variables in the default data folder set by
+\code{\link{setDataPath}}, or print information about the variable mentionned
+as the varname argument.
 }
