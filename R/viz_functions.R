@@ -10,12 +10,12 @@
 #' @examples \dontrun{viz_ts(var_list$bottom_temperature, var_list)}
 viz_ts <- function(data,var_list){
   # Check for time dimensions
-  stopifnot("time" %in% names(var_list))
+  stopifnot("time" %in% names(var_list), length(data) == length(var_list$time))
 
   # Plot time series
   graphics::plot(var_list$time, data, type="o",
                  main = paste0("Timeserie from ",var_list$time[1]," to ",utils::tail(var_list$time,1)),
-                 xlab = "Time")
+                 xlab = "Time", ylab = paste0("data [",var_list$units,"]"))
 }
 
 
@@ -43,7 +43,7 @@ viz_map <- function(data, var_list){
   } else if(var_list[["nc_var"]] == "bottom_salinity"){
     colorname = "haline"
     coldir=-1
-  } else if(var_list[["nc_var"]] == "C1" | var_list[["nc_var"]] == "C2"){
+  } else if(var_list[["nc_var"]] == "C1" | var_list[["nc_var"]] == "C0"){
     colorname = "deep"
     coldir = 1
   } else{
@@ -69,5 +69,7 @@ viz_map <- function(data, var_list){
 
     # Add grid
     ggplot2::theme(
-      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5))
+      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5)) +
+    ggplot2::guides(fill=ggplot2::guide_legend(title=var_list$units))
+
 }
