@@ -1,3 +1,5 @@
+# Slice a var_list to comprise data inside a given latitude and longitude range.
+#
 slice_xy <- function(vl, longitude, latitude){
   # Check for longitude and latitude coodinates, and dimensions of data
   stopifnot("longitude" %in% names(vl),"latitude" %in% names(vl))
