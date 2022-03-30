@@ -9,11 +9,11 @@ stat_var(var_list, op, dims, prct = c(0.1, 0.9))
 \arguments{
 \item{var_list}{list containing the variable extracted from \code{\link{read_nc}} or \code{\link{load_var}}}
 
-\item{op}{operations to perform on the data, character or list of characters
+\item{op}{operations to perform on the data, character or list of characters.
 Operations are "mean","min","max","med" for median, "sd" for standard
 deviation, "prct" for percentile, "all" for all of the previous.}
 
-\item{dims}{Dimensions to operate the analysis. "xy" | "t". "xy" return a
+\item{dims}{Output data dimensions, "xy" | "t". "xy" return a
 spatial grid where the analysis is performed along time, or "t" return a
 time series on which the analysis is performed along the longitude and
 latitude dimensions.}
