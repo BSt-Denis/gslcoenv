@@ -29,7 +29,7 @@ setDataPath <- function(path_to_data=NA){
   rlist::list.save(params,params_path)
 
   # Print new path name
-  print(paste0("Default data folder :",path_to_data))
+  print(paste0("Default data folder : ",path_to_data))
 }
 
 
