@@ -13,7 +13,7 @@ indistance_var(var_list, lon, lat, dist = 5000)
 
 \item{lat}{latitude coordinate of the point}
 
-\item{dist}{distance in meter of the center of the point to draw the polygone border,
+\item{dist}{distance, in meter, of the coordinates to keep the data.
 default is 5000 meters}
 }
 \value{
@@ -24,5 +24,5 @@ Select the data that is located within a certain distance of a
 specified geographic coordinate.
 }
 \examples{
-\dontrun{masked_list = indistance_polygon(var_list, lon=-65, lat=49, dist=5000)}
+\dontrun{masked_list = indistance_polygon(var_list, lon=-65, lat=49, dist=15000)}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/poly_functions.R
 \name{inpolygon_var}
 \alias{inpolygon_var}
-\title{Mask data that are outside a chosen polygon}
+\title{Select data that are outside a chosen polygon}
 \usage{
 inpolygon_var(var_list, pol)
 }
@@ -15,7 +15,7 @@ inpolygon_var(var_list, pol)
 var_list containing the variables, coordinates and metadata of the selected data
 }
 \description{
-Mask and slice the data of a var_list that are outside the polygon
+Select and slice the data of a var_list that are outside a polygon
 }
 \examples{
 \dontrun{masked_list = inpolygon_var(var_list, polygone)}
