@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyse_var.R
 \name{stat_var}
 \alias{stat_var}
-\title{Perform some statistical analysis on a var_list}
+\title{Perform statistical analysis on a var_list}
 \usage{
 stat_var(var_list, op, dims, prct = c(0.1, 0.9))
 }
@@ -13,7 +13,7 @@ stat_var(var_list, op, dims, prct = c(0.1, 0.9))
 Operations are "mean","min","max","med" for median, "sd" for standard
 deviation, "prct" for percentile, "all" for all of the previous.}
 
-\item{dims}{Output data dimensions, "xy" | "t". "xy" return a
+\item{dims}{Output data dimensions, dims = "xy" or "t"."xy", return a
 spatial grid where the analysis is performed along time, or "t" return a
 time series on which the analysis is performed along the longitude and
 latitude dimensions.}
