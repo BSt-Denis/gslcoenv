@@ -43,10 +43,11 @@ viz_map <- function(data, var_list){
   } else if(var_list[["nc_var"]] == "bottom_salinity"){
     colorname = "haline"
     coldir=-1
-  } else if(var_list[["nc_var"]] == "C1" | var_list[["nc_var"]] == "C0"){
+  } else if(var_list[["nc_var"]] == "CIL1" | var_list[["nc_var"]] == "CIL0"){
     colorname = "deep"
     coldir = 1
   } else{
+    print("Elements nc_var in var_list is unrecognized")
     colorname = "thermal"
     coldir = -1
   }
