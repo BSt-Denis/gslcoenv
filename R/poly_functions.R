@@ -152,9 +152,9 @@ show_poly <- function(pol){
 }
 
 
-#' @title Mask data that are outside a chosen polygon
+#' @title Select data that are outside a chosen polygon
 #'
-#' @description Mask and slice the data of a var_list that are outside the polygon
+#' @description Select and slice the data of a var_list that are outside a polygon
 #'
 #' @param var_list list containing the variables extracted from \code{\link{read_nc}} or \code{\link{load_var}}
 #' @param pol polygon of class "sf", "sfc" or "sfg"
@@ -201,13 +201,13 @@ inpolygon_var <- function(var_list,pol){
 #' @param var_list list containing the variables extracted from \code{\link{read_nc}} or \code{\link{load_var}}
 #' @param lon longitude coordinate of the point
 #' @param lat latitude coordinate of the point
-#' @param dist distance in meter of the center of the point to draw the polygone border,
+#' @param dist distance, in meter, of the coordinates to keep the data.
 #'  default is 5000 meters
 #'
 #' @return var_list containing the variables, coordinates and metadata of the selected data
 #' @export
 #'
-#' @examples \dontrun{masked_list = indistance_polygon(var_list, lon=-65, lat=49, dist=5000)}
+#' @examples \dontrun{masked_list = indistance_polygon(var_list, lon=-65, lat=49, dist=15000)}
 indistance_var <- function(var_list, lon, lat, dist=5000){
 
   # Check for longitude and latitude coodinates, and dimensions of data
