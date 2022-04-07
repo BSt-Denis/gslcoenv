@@ -13,7 +13,10 @@ the St. Lawrence Gulf and Estuary.
 You can install the development version of gslcoenv from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+# If the devtools package is not installed
+install.packages("devtools")
+
+# Install gslcoenv package and its dependencies
 devtools::install_github("BSt-Denis/gslcoenv")
 ```
 
@@ -21,7 +24,8 @@ devtools::install_github("BSt-Denis/gslcoenv")
 1. You need to download the data stored on the DFO Virtual Private Network (VPN)
 at this location -> R:/Commun/Virginie Roy/Package_gslcoenv/data/
 
-2. Tell the package where to find the data on your local computer.
+2. Tell the package where to find the data on your local computer with the 
+setDataPath() function.
 
 ``` r
 # Import package
@@ -38,7 +42,7 @@ setDataPath("C:\\Users\\...\\...\\folder_with_data\\")
 # List variables found in the folder
 list_nc()
 ```
-R will print the variables names in the console if everything is fine
+R will print the variables names in the console if he find the data.
 
 ## Example
 
@@ -126,4 +130,3 @@ It returns the element in the same form as they were insert (list, matrix, array
 ## Troubleshooting
 
 1. Make sure the version of R is 3.5.0 or newer, and the packages are all up to date. If you are using a computer from DFO-MPO, you will need to start RStudio with admin privileges with Avecto to update the version of R and its packages.
-
