@@ -1,14 +1,14 @@
-#' @title Perform some statistical analysis on a var_list
+#' @title Perform statistical analysis on a var_list
 #'
 #' @description Perform one or multiple statistical analysis along the time or
 #' spatial dimension.
 #'
 #' @param var_list  list containing the variable extracted from \code{\link{read_nc}} or \code{\link{load_var}}
-#' @param op operations to perform on the data, character or list of characters
+#' @param op operations to perform on the data, character or list of characters.
 #' Operations are "mean","min","max","med" for median, "sd" for standard
 #' deviation, "prct" for percentile, "all" for all of the previous.
 #'
-#' @param dims Dimensions to operate the analysis. "xy" | "t". "xy" return a
+#' @param dims Output data dimensions, dims = "xy" or "t"."xy", return a
 #' spatial grid where the analysis is performed along time, or "t" return a
 #' time series on which the analysis is performed along the longitude and
 #' latitude dimensions.
@@ -25,11 +25,14 @@
 #' temp <- stat_var(var_list,"all", "t", prct = c(0.25,0.5,0.75))}
 stat_var <- function(var_list, op, dims, prct = c(0.1,0.9)){
 
+  # Check if the list is already pass into this function.
+  stopifnot(var_list$nc_var %in% names(var_list))
+
   # Create empty list to return
   out_list = list()
   var_vec = vector()
 
-  # Adjust proper dims to analyze
+  # dims to analyze
   if( dims == 'xy'){
     dims = c(1,2)
     out_list[["longitude"]] = var_list$longitude
@@ -97,4 +100,16 @@ stat_var <- function(var_list, op, dims, prct = c(0.1,0.9)){
   out_list[["nc_var"]] = var_list$nc_var
 
   return(out_list)
+}
+
+yearly <- function(var_list){
+
+  # Check if time is a dimension in var_list
+  stopifnot("time" %in% names(var_list))
+
+  # Get yearly time
+  time_year = unique(lubridate::floor_date(var_list$time, unit="year"))
+
+  # Calculate mean values over a year
+
 }
