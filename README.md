@@ -127,6 +127,8 @@ var_list[["longitude"]]
 ```
 It returns the element in the same form as they were insert (list, matrix, array, etc.)
 
+## Polygons in gslcoenv
+
 ## Troubleshooting
 
 1. Make sure the version of R is 3.5.0 or newer, and the packages are all up to date. If you are using a computer from DFO-MPO, you will need to start RStudio with admin privileges with Avecto to update the version of R and its packages.
