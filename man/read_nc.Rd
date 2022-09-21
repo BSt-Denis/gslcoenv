@@ -38,12 +38,12 @@ Other possible format are available via \code{\link{strptime}}}
 \value{
 Return a list containing the sliced data, its dimensions and their
 values and the variable units.
-To access those field var_data$fieldname
+
 To get all the possible field names, use the command \code{\link{names}}.
 Example : names(var_data)
 }
 \description{
-This function read the .nc file associated with the varname
+This function read the netCDF (.nc) file associated with the varname
 argument, extract the data and slice it according to specified arguments.
 The function return a list containing the sliced data, its coordinates and
 others useful metadata.
