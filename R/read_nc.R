@@ -1,6 +1,6 @@
 #' @title Read netCDF file containing the gridded data.
 #'
-#' @description This function read the .nc file associated with the varname
+#' @description This function read the netCDF (.nc) file associated with the varname
 #' argument, extract the data and slice it according to specified arguments.
 #' The function return a list containing the sliced data, its coordinates and
 #' others useful metadata.
@@ -23,7 +23,7 @@
 #'
 #' @return Return a list containing the sliced data, its dimensions and their
 #' values and the variable units.
-#' To access those field var_data$fieldname
+#'
 #' To get all the possible field names, use the command \code{\link{names}}.
 #' Example : names(var_data)
 #'
@@ -101,7 +101,7 @@ read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data = 
   var_nc = ncdf4::ncvar_get(nc, varid=varname, start=start_vec, count=count_vec)
 
   # Meshgrid for longitude and latitude
-  ms_grid = TauP.R::meshgrid(valid_lat,valid_lon)
+  ms_grid = pracma::meshgrid(valid_lat,valid_lon)
 
   # Generate a data list
   var_data = list(varname, var_nc, ms_grid$y, ms_grid$x, time_data, dim(var_nc), c("longitude","latitude","time"), ncdf4::ncatt_get(nc, varname, attname="units")$value, varname)
