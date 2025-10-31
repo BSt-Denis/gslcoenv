@@ -1,6 +1,6 @@
 #' @title info_var
 #'
-#' @description This function print information about a variable list created by read_nc.
+#' @description Print information about a variable list created by read_nc.
 #' The variable name, shape, dimension names, units and memory used are printed.
 #' This function is useful to take a quick look at the extracted variable.
 #'
