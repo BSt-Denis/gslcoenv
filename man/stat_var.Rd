@@ -18,7 +18,7 @@ spatial grid where the analysis is performed along time. If "t", return a
 time series on which the analysis is performed along the longitude and
 latitude dimensions for each time step.}
 
-\item{prct}{Float or vector where element are between 0 and 1 to calculate
+\item{prct}{Float or vector where the elements are between 0 and 1 to calculate
 the percentile, 0.1 = 10%. Default = c(0.1,0.9). Only works if "prct" or
 "all" is include in op. argument.}
 }
