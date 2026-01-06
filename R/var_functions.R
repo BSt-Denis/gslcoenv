@@ -1,4 +1,4 @@
-###############################################################################
+#===============================================================================
 # info_var
 #' @title info_var
 #'
@@ -28,7 +28,7 @@ info_var <- function(var_list) {
 
 }
 
-###############################################################################
+#===============================================================================
 # load_var
 #' @title Load variable to a var_list
 #'
@@ -114,7 +114,7 @@ load_var <- function(loadpath){
   return(var_list)
 }
 
-###############################################################################
+#===============================================================================
 # save_var
 #' @title Save variable in a local file
 #'
@@ -216,9 +216,9 @@ save_var <- function(var_list, savepath){
   print("Data saved")
 }
 
-###############################################################################
+#===============================================================================
 # bymonth_var
-#' @title Extract data from a variable list according to specified months
+#' @title Slice data from a variable list according to specified months
 #'
 #' @description Extract data from a var_list by specifying which month the data
 #' should contain.
@@ -263,6 +263,29 @@ bymonth_var <- function(var_list, month_num){
 
   return(var_list)
 }
+
+#' #===============================================================================
+#' # substitute_var
+#' #' @title Replace value of element by a choosen one
+#' #'
+#' #' @description Substitute certain element of the data by a choosen value.
+#' #' This can be useful to replace the 0 in certain environment variable by a NA.
+#' #'
+#' #' @param var_list var_list created or loaded by this package
+#' #' @param old_value
+#' #' @param new_value
+#' #'
+#' #' @return substitute_var_list , new var_list with the element substituted
+#' #'
+#' #' @export
+#' #'
+#' #' @examples \dontrun{masked_var_list <- mask_var(var_list,0, NA)
+#' #'
+#' substitue_var <- function(var_list, old_value, new_value = NA){
+#'   for (name in ds$variables){
+#'     ds[name]
+#'   }
+#' }
 
 
 

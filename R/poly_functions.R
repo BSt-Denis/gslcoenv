@@ -1,3 +1,5 @@
+###############################################################################
+# create_poly
 #' @title Create polygon from a list or vector of longitude and latitude
 #' coordinates
 #'
@@ -40,7 +42,8 @@ create_poly <- function(longitude, latitude, crs = 4326){
   return(pol)
 }
 
-
+###############################################################################
+# save_poly
 #' @title Save polygon on local disk
 #'
 #' @description Save polygon on the local computer in various format
@@ -59,10 +62,10 @@ create_poly <- function(longitude, latitude, crs = 4326){
 #' \dontrun{save_poly(polgone,"/home/bruno/save_directory/save_poly.rdata",
 #' polyname = "16F")}
 #'
-save_poly <- function(pol, savepath, polyname=NA){
+save_poly <- function(pol, savepath, polyname=NULL){
   # Rdata format
   if(tools::file_ext(savepath) == "rdata"){
-    if(is.na(polyname)){
+    if(is.null(polyname)){
       stop("polyname argument must not be NA, please enter a valid name for your polygon")
     }
     # Create empty list
@@ -87,7 +90,8 @@ save_poly <- function(pol, savepath, polyname=NA){
 
 }
 
-
+###############################################################################
+# load_poly
 #' @title Load a polygon from file
 #'
 #' @description Load a polygon from a file. For the moment, only .csv and .rdata
@@ -99,8 +103,7 @@ save_poly <- function(pol, savepath, polyname=NA){
 #' @param lat_name name given to the columns with the latitude component in
 #' the loaded file. Arguments only works for csv file
 #'
-#' @return Polygon as sfc class defined in "sf" package is extension is .csv.
-#' Return a list comprising a polygon of sfc class.
+#' @return Polygon as sfc class defined in "sf" package.
 #'
 #' @export
 #'
@@ -123,7 +126,8 @@ load_poly <- function(load_path, lon_name="longitude", lat_name="latitude"){
   return(pol)
 }
 
-
+###############################################################################
+# show_poly
 #' @title Show polygon on the map
 #'
 #' @description Show a polygon on the map of the estuary and the gulf of
@@ -151,7 +155,8 @@ show_poly <- function(pol){
       panel.background = ggplot2::element_rect(fill = "aliceblue"))
 }
 
-
+###############################################################################
+# inpolygon_var
 #' @title Select data that are outside a chosen polygon
 #'
 #' @description Select and slice the data of a var_list that are outside a polygon
@@ -192,7 +197,8 @@ inpolygon_var <- function(var_list,pol){
   return(var_list)
 }
 
-
+###############################################################################
+# indistance_var
 #' @title Select the data within a distance of a point
 #'
 #' @description Select the data that is located within a certain distance of a

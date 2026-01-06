@@ -1,7 +1,5 @@
 #===============================================================================
 # read_nc
-#===============================================================================
-
 #' @title Read and import environmental data.
 #'
 #' @description This function read the NetCDF (.nc) file associated with the
@@ -37,8 +35,8 @@
 #' var = read_nc("bottom_temperature", longitude=c(-64,-50), latitude=c(34,50),
 #' time = c("1985-01","2004-11"))}
 #'
-read_nc <- function(varname, longitude=NULL, latitude=NULL, time=NULL, path_to_data=NULL, date_format="%Y-%m") {
-
+read_nc <- function(varname, longitude=NULL, latitude=NULL, time=NULL,
+                    path_to_data=NULL, date_format="%Y-%m"){
   # Check for path_to_data argument
   if(is.null(path_to_data)){
     path_to_data <- yaml::read_yaml(system.file("extdata", "pkg_parameters.yaml", package = "gslcoenv"))$data_path
@@ -151,15 +149,12 @@ read_nc <- function(varname, longitude=NULL, latitude=NULL, time=NULL, path_to_d
 
 #===============================================================================
 # list_nc
-#===============================================================================
-
 #' @title List the variables in the data folder
 #'
 #' @description  Provide information on the variables found in the data folder set by
 #' \code{\link{setDataPath}}
 #'
 #' @export
-
 list_nc <- function(){
   # Get path to parameters file
   parameter_file <- system.file("extdata", "pkg_parameters.yaml", package = "gslcoenv")
@@ -231,4 +226,4 @@ list_nc <- function(){
 
 #===============================================================================
 # nouvelle_fonction
-#===============================================================================
+
