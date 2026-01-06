@@ -2,7 +2,7 @@
 % Please edit documentation in R/var_functions.R
 \name{bymonth_var}
 \alias{bymonth_var}
-\title{Extract data from a variable list according to specified months}
+\title{Slice data from a variable list according to specified months}
 \usage{
 bymonth_var(var_list, month_num)
 }

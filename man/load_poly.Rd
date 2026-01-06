@@ -16,8 +16,7 @@ the loaded file. Arguments only works for csv file}
 the loaded file. Arguments only works for csv file}
 }
 \value{
-Polygon as sfc class defined in "sf" package is extension is .csv.
-Return a list comprising a polygon of sfc class.
+Polygon as sfc class defined in "sf" package.
 }
 \description{
 Load a polygon from a file. For the moment, only .csv and .rdata
