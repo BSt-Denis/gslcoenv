@@ -37,10 +37,10 @@
 #' var = read_nc("bottom_temperature", longitude=c(-64,-50), latitude=c(34,50),
 #' time = c("1985-01","2004-11"))}
 #'
-read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data=NA, date_format="%Y-%m") {
+read_nc <- function(varname, longitude=NULL, latitude=NULL, time=NULL, path_to_data=NULL, date_format="%Y-%m") {
 
   # Check for path_to_data argument
-  if(is.na(path_to_data)){
+  if(is.null(path_to_data)){
     path_to_data <- yaml::read_yaml(system.file("extdata", "pkg_parameters.yaml", package = "gslcoenv"))$data_path
   }
 
@@ -52,7 +52,7 @@ read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data=NA
     stop(paste0("No netCDF file in directory : ",path_to_data))
   }
 
-  # Find the file with the varname you are looking for
+  # Find the file containing the varname in argument
   file_counter=0
   for (filename in file_list){
     nc <- ncdf4::nc_open(paste0(path_to_data,filename))
@@ -69,17 +69,18 @@ read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data=NA
     stop(paste0(" Varname : ",varname," is not found in the folder: ",path_to_data))
   }
 
-  # Get indexes to slice values
   # Longitude
-  if (is.na(longitude[1])) {
+  lon_vector <- ncdf4::ncvar_get(nc,'longitude')
+
+  # Slice longitude according to the function argument
+  if (is.null(longitude)) {
     lon_start <- 1
     lon_count <- -1
-    valid_lon <- ncdf4::ncvar_get(nc,'longitude',start=c(1,1),count=c(-1,1))
+    valid_lon <- lon_vector
   }
   else {
-    nc_lon <- ncdf4::ncvar_get(nc,'longitude',start=c(1,1),count=c(-1,1))
-    valid_lon <- nc_lon[dplyr::between(nc_lon,min(longitude),max(longitude))]
-    lon_match <- match(c(min(valid_lon),max(valid_lon)),nc_lon)
+    valid_lon <- lon_vector[dplyr::between(lon_vector,min(longitude),max(longitude))]
+    lon_match <- match(c(min(valid_lon),max(valid_lon)),lon_vector)
 
     # Longitude index and count
     lon_start <- min(lon_match)
@@ -87,15 +88,15 @@ read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data=NA
   }
 
   # Latitude
-  if (is.na(latitude[1])) {
+  lat_vector <- ncdf4::ncvar_get(nc,'latitude')
+  if (is.null(latitude)) {
     lat_start <- 1
     lat_count <- -1
-    valid_lat <- ncdf4::ncvar_get(nc,'latitude',start=c(1,1),count=c(1,-1))
+    valid_lat <- lat_vector
   }
   else {
-    nc_lat <- ncdf4::ncvar_get(nc,'latitude',start=c(1,1),count=c(1,-1))
-    valid_lat <- nc_lat[dplyr::between(nc_lat,min(latitude),max(latitude))]
-    lat_match <- match(c(min(valid_lat),max(valid_lat)),nc_lat)
+    valid_lat <- lat_vector[dplyr::between(lat_vector,min(latitude),max(latitude))]
+    lat_match <- match(c(min(valid_lat),max(valid_lat)),lat_vector)
 
     # Latitude index and count
     lat_start <- min(lat_match)
@@ -103,28 +104,28 @@ read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data=NA
   }
 
   # Time
-  if (is.na(time[1])) {
+  time_vector <- nc_datetime2R_datetime(nc)
+  if (is.null(time)) {
     time_start <- 1
     time_count <- -1
-    time_data <- xr_datetime2R_datetime(nc)
+    valid_time <- time_vector
   }
   else {
-    nc_time <- ncdf4::ncvar_get(nc,'time')
 
     # Convert argument time into date
-    time = lubridate::as_date(lubridate::parse_date_time(time,date_format))
+    time_bound = lubridate::as_datetime(lubridate::parse_date_time(time,date_format))
 
-    # Convert second since epoch to R time
-    nc_time <- lubridate::as_date(nc_time/86400, origin = lubridate::origin)
-    time_data <- nc_time[dplyr::between(nc_time,min(time),max(time))]
-    time_match <- match(c(min(time_data),max(time_data)),nc_time)
+    # Slice time
+    valid_time <- time_vector[dplyr::between(time_vector,time_bound[1],time_bound[2])]
+    # Find the index that match the start and end of the time sliced
+    time_match <- match(c(min(valid_time),max(valid_time)),time_vector)
 
     # Time index and count
     time_start <- min(time_match)
     time_count <- max(time_match)-min(time_match)+1
   }
 
-  # Create vector
+  # Create start and count vector to extract the variable
   start_vec = c(lon_start,lat_start,time_start)
   count_vec = c(lon_count,lat_count,time_count)
 
@@ -135,7 +136,9 @@ read_nc <- function(varname, longitude=NA, latitude=NA, time=NA, path_to_data=NA
   ms_grid = pracma::meshgrid(valid_lat,valid_lon)
 
   # Generate a data list
-  var_data = list(varname, var_nc, ms_grid$Y, ms_grid$X, time_data, dim(var_nc), c("longitude","latitude","time"), ncdf4::ncatt_get(nc, varname, attname="units")$value, varname)
+  var_data = list(varname, var_nc, ms_grid$Y, ms_grid$X,
+                  valid_time, dim(var_nc), c("longitude","latitude","time"),
+                  ncdf4::ncatt_get(nc, varname, attname="units")$value, varname)
 
   # Add symbolic names to data list
   names(var_data) = c("variables",varname,"longitude","latitude","time","shape","dims","units","nc_var")
