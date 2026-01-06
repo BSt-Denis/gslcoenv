@@ -2,19 +2,19 @@
 % Please edit documentation in R/set_Path.R
 \name{setDataPath}
 \alias{setDataPath}
-\title{Set the path to the folder where the data are stored}
+\title{Set the default path to get the environmental data}
 \usage{
-setDataPath(path_to_data = NA)
+setDataPath(path_to_data = NULL)
 }
 \arguments{
-\item{path_to_data}{Path to the default data folder, if NA, the stored default
-path is displayed.}
+\item{path_to_data}{Path to the default data folder, Windows (\\) or Linux (/)
+path style are supported even for Windows architecture, see example.
+if NA, the default path is displayed.}
 }
 \description{
-Modifies the default path of the data folder in the
-pkg_params.rdata file.
+Tell this package where to find the environmental data.
 }
 \examples{
-\dontrun{setDataPath("/home/bruno/workspace/Data/GSL-grid/")}
+\dontrun{setDataPath("C:/Users/stdenisb/Documents/Coding/data/gslcoenv_data/")}
 
 }

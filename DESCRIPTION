@@ -10,7 +10,7 @@ Description: Provides functionality to manipulate, analyse and plot data from
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.3
 Imports: 
     cmocean,
     dplyr,

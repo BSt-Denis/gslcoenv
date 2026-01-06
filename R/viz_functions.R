@@ -1,3 +1,5 @@
+###############################################################################
+# viz_ts
 #' @title Visualize time series
 #'
 #' @description Function to visualize 1D data along time.
@@ -18,7 +20,8 @@ viz_ts <- function(data,var_list){
                  xlab = "Time", ylab = paste0("data [",var_list$units,"]"))
 }
 
-
+###############################################################################
+# viz_map
 #' @title Plot data on a map of the estuary
 #'
 #' @description Create a map displaying the data on the estuary with a colormap
@@ -37,17 +40,18 @@ viz_map <- function(data, var_list){
   stopifnot("longitude" %in% names(var_list),"latitude" %in% names(var_list), length(dim(data)) == 2)
 
   # Choose the right colorbar
-  if(var_list[["nc_var"]] == "bottom_temperature"){
+  if(var_list[["nc_var"]] == "bottom_temperature"| var_list[["nc_var"]] == "CILTmin"){
     colorname = "thermal"
     coldir = 1
   } else if(var_list[["nc_var"]] == "bottom_salinity"){
     colorname = "haline"
     coldir=-1
-  } else if(var_list[["nc_var"]] == "CIL1" | var_list[["nc_var"]] == "CIL0"){
+
+  } else if(ds$nc_var %in% c('lshw_layer_thickness','CIL3','CIL2','CIL1','CIL0')){
     colorname = "deep"
     coldir = 1
   } else{
-    print("Elements nc_var in var_list is unrecognized")
+    print("Element nc_var in var_list is unrecognized")
     colorname = "thermal"
     coldir = -1
   }
@@ -70,7 +74,7 @@ viz_map <- function(data, var_list){
 
     # Add grid
     ggplot2::theme(
-      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5)) +
+      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", linewidth = 0.5)) +
     ggplot2::guides(fill=ggplot2::guide_legend(title=var_list$units))
 
 }

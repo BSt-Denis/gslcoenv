@@ -1,63 +1,48 @@
-#' @title Set the path to the folder where the data are stored
+#' @title Set the default path to get the environmental data
 #'
-#' @description Modifies the default path of the data folder in the
-#' pkg_params.rdata file.
+#' @description Tell this package where to find the environmental data.
 #'
-#' @param path_to_data Path to the default data folder, if NA, the stored default
-#' path is displayed.
+#' @param path_to_data Path to the default data folder, Windows (\\) or Linux (/)
+#' path style are supported even for Windows architecture, see example.
+#' if NA, the default path is displayed.
 #'
 #' @export
 #'
 #' @examples
-#' \dontrun{setDataPath("/home/bruno/workspace/Data/GSL-grid/")}
+#' \dontrun{setDataPath("C:/Users/stdenisb/Documents/Coding/data/gslcoenv_data/")}
 #'
-setDataPath <- function(path_to_data=NA){
-  # Set a variable for path to parameters files
-  params_path <- system.file("extdata", "pkg_params.rdata", package = "gslcoenv")
 
-  # Import parameters as list
-  params <- rlist::list.load(params_path)
+setDataPath <- function(path_to_data=NULL){
+  # Get path to parameters file
+  parameter_file <- system.file("extdata", "pkg_parameters.yaml", package = "gslcoenv")
+
+  #Get list of parameters
+  parameters <- yaml::read_yaml(parameter_file)
 
   # Return default data path if arguments is NA
-  if(is.na(path_to_data)){
-    path_to_data = params$data_path
+  if(is.null(path_to_data)){
+    cat("Data folder : ",parameters$data_path)
   }
-  # Set the new path to the data folder
-  params$data_path <- path_to_data
 
-  # Save the list to a rdata file
-  rlist::list.save(params,params_path)
+  else{
+    # Check if the path ends with a closing string (\\) for Windows style, or (/) for Linux style path
+    if(substring(path_to_data,nchar(path_to_data)) != "\\" & substring(path_to_data,nchar(path_to_data)) != "/"){
+      # Check if path is Windows style and close the path with double backslash
+      if(grepl("\\\\", path_to_data)){
+        path_to_data <- paste0(path_to_data,"\\")
+      }
+      # Assume path is Linux style and close it with forward slash
+      else{
+        path_to_data <- paste0(path_to_data,"/")
+      }
+    }
 
-  # Print new path name
-  print(paste0("Default data folder : ",path_to_data))
+    # Overwrite the old path with new path in the parameters file
+    parameters$data_path <- path_to_data
+    yaml::write_yaml(parameters,parameter_file)
+
+    # Print new path name
+    cat("New data folder : ",path_to_data)
+  }
 }
 
-
-#' #' @title Set the path to the folder where the polygons are stored
-#' #'
-#' #' @description Modifies the default path of the polygon folder in the
-#' #' pkg_params.rdata file.
-#' #'
-#' #' @param path_to_poly Path to the default polygon folder
-#' #'
-#' #' @export
-#' #'
-#' #' @examples
-#' #' \dontrun{setPolyPath("/home/bruno/workspace/Data/Polygon/")}
-#' setPolyPath <- function(path_to_poly){
-#'   # Set a variable for path to parameters files
-#'   params_path <- system.file("extdata", "pkg_params.rdata", package = "gslcoenv")
-#'
-#'   # Import parameters as list
-#'   params <- rlist::list.load(params_path)
-#'
-#'   # Set the new path to the polygon folder
-#'   params$poly_path <- path_to_poly
-#'
-#'   # Save the list to a rdata file
-#'   rlist::list.save(params,params_path)
-#'
-#'   # Print new path name
-#'   print(paste0("Default polygon folder change to :",path_to_poly))
-#'
-#' }

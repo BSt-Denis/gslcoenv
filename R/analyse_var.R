@@ -13,7 +13,7 @@
 #' time series on which the analysis is performed along the longitude and
 #' latitude dimensions for each time step.
 #'
-#' @param prct Float or vector where element are between 0 and 1 to calculate
+#' @param prct Float or vector where the elements are between 0 and 1 to calculate
 #' the percentile, 0.1 = 10%. Default = c(0.1,0.9). Only works if "prct" or
 #' "all" is include in op. argument.
 #'
@@ -102,14 +102,14 @@ stat_var <- function(var_list, op, dims, prct = c(0.1,0.9)){
   return(out_list)
 }
 
-yearly <- function(var_list){
-
-  # Check if time is a dimension in var_list
-  stopifnot("time" %in% names(var_list))
-
-  # Get yearly time
-  time_year = unique(lubridate::floor_date(var_list$time, unit="year"))
-
-  # Calculate mean values over a year
-
-}
+# yearly <- function(var_list){
+#
+#   # Check if time is a dimension in var_list
+#   stopifnot("time" %in% names(var_list))
+#
+#   # Get yearly time
+#   time_year = unique(lubridate::floor_date(var_list$time, unit="year"))
+#
+#   # Calculate mean values over a year
+#
+# }
