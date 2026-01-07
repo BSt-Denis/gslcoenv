@@ -15,17 +15,15 @@ Imports:
     cmocean,
     dplyr,
     ggplot2,
-    here,
     lubridate,
-    magrittr,
     ncdf4,
     pracma,
     rlist,
     rnaturalearth,
-    rnaturalearthdata,
     sf,
     stats,
     tools,
-    utils
+    utils,
+    yaml
 Depends: 
     R (>= 2.10)
