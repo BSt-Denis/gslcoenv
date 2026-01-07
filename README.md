@@ -1,10 +1,7 @@
-
----
-title: "gslcoenv"
----
 <!-- badges: start -->
 <!-- badges: end -->
 
+## glscoenv
 The goal of gslcoenv is to provide functionality to interact with the interpolated 
 grid contained in Peter Galbraith Assessment report of the physical conditions of 
 the St. Lawrence Gulf and Estuary.
