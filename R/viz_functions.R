@@ -26,10 +26,10 @@ viz_ts <- function(data,var_list){
 # viz_map
 #' @title Plot data on a map of the estuary
 #'
-#' @description Create a map displaying the data on the estuary with a colormap
+#' @description Create a map displaying the data on the map with a colormap
 #' from the \code{\link[cmocean]{cmocean}} package.
 #'
-#' @param data name of variable to plot
+#' @param data 2-D array (longitude, latitude) of the data to plot,
 #' @param var_list var_list containing coordinates and dimensions of the data
 #'
 #' @export
