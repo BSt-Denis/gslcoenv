@@ -151,7 +151,7 @@ show_poly <- function(pol){
     ggplot2::ylab("Latitude") +
     ggplot2::ggtitle("Showing the polygon in red") +
     ggplot2::theme(
-      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", size = 0.5),
+      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", linewidth = 0.5),
       panel.background = ggplot2::element_rect(fill = "aliceblue"))
 }
 
