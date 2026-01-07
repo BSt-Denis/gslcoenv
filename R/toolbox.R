@@ -33,7 +33,7 @@ slice_xy <- function(vl, longitude, latitude){
 # nc_datetime2R_datetime
 #' Convert various time format from a NetCDF file to an R datetime
 #'
-#' This function doubles a number. It is not exported.
+#' This function is not exported.
 #'
 #' @param nc ncdf4 object
 #' @return Numeric Second since epoch time 1970-01-01
