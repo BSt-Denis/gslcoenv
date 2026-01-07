@@ -35,7 +35,7 @@ slice_xy <- function(vl, longitude, latitude){
 #'
 #' This function doubles a number. It is not exported.
 #'
-#' @param nc A ncdf4 object
+#' @param nc ncdf4 object
 #' @return Numeric Second since epoch time 1970-01-01
 #' @keywords internal
 nc_datetime2R_datetime <- function(nc){
