@@ -7,7 +7,7 @@
 info_var(var_list)
 }
 \arguments{
-\item{ls}{variable list created by this package}
+\item{var_list}{variable list created by this package}
 }
 \value{
 The output from \code{\link{print}}
@@ -18,5 +18,5 @@ The variable name, shape, dimension names, units and memory used are printed.
 This function is useful to quickly get information about a variable.
 }
 \examples{
-\dontrun{var_info(ls)}
+\dontrun{var_info(my_environemental_data_list)}
 }

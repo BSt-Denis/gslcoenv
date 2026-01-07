@@ -6,13 +6,13 @@
 #' The variable name, shape, dimension names, units and memory used are printed.
 #' This function is useful to quickly get information about a variable.
 #'
-#' @param ls variable list created by this package
+#' @param var_list variable list created by this package
 #'
 #' @return The output from \code{\link{print}}
 #' @export
 #'
 #' @examples
-#' \dontrun{var_info(ls)}
+#' \dontrun{var_info(my_environemental_data_list)}
 info_var <- function(var_list) {
   # Check if ls is a list
   if (!is.list(var_list)) {
@@ -23,7 +23,7 @@ info_var <- function(var_list) {
   cat("Shape = ",paste(var_list$shape,collapse=", "),"\n")
   cat("Dimensions = ",paste(var_list$dims,collapse=", "),"\n")
   cat("Units = ",var_list$units,"\n")
-  cat("Memory size = ",format(utils::object.size(ds), units = 'auto'),"\n")
+  cat("Memory size = ",format(utils::object.size(var_list), units = 'auto'),"\n")
   cat("NetCDF variable name = ",var_list$nc_var,"\n")
 
 }
