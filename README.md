@@ -1,6 +1,7 @@
 
-# gslcoenv
-
+---
+title: "gslcoenv"
+---
 <!-- badges: start -->
 <!-- badges: end -->
 
@@ -22,7 +23,7 @@ devtools::install_github("BSt-Denis/gslcoenv")
 
 ## Getting Started
 1. You need to download the data stored on the DFO Virtual Private Network (VPN)
-at this location -> R:/Commun/Virginie Roy/Package_gslcoenv/data/
+at this location -> S:/PackageR_gslcoenv
 
 2. Tell the package where to find the data on your local computer with the 
 setDataPath() function.
@@ -31,18 +32,21 @@ setDataPath() function.
 # Import package
 library(gslcoenv)
 
-# For linux style path
+# Linux style path
 setDataPath("/home/.../.../folder_with_data/")
 
-# For Windows style path
-setDataPath("C:\\Users\\...\\...\\folder_with_data\\")
+or
+
+# Windows style Path
+setDataPath("C:/users/.../.../folder_with_data/")
+
 ```
 3. Check if the package find the data
 ``` r
 # List variables found in the folder
 list_nc()
 ```
-R will print the variables names in the console if he find the data.
+R will print the variables names along with useful information on the found data.
 
 ## Example
 
@@ -100,13 +104,13 @@ A var_list, is a object of class "list" that carries one or many variables such 
 Fields in var_list : 
 1. variables : list of variable names in the var_list
 2. variable_name : data of the variable
-3. longitude : 2d array containing the longitude coordinates
-4. latitude : 2d array containing the latitude coordinates
-5. time : vector of "Date object" containing the timestamp
+3. longitude : 2-D array containing the longitude coordinates
+4. latitude : 2-D array containing the latitude coordinates
+5. time : vector containing the datetime values
 6. shape : vector of integer containing the length of each dimensions
 7. dims : vector of character containing the name of the dimensions
 8. units : units of the variables
-9. nc_var : name of the variable extracted from the netCDF file
+9. nc_var : name of the variable extracted from the NetCDF file (This element never changed)
 
 As for a list in R, there is three ways to access fields in a var_list : 
 ``` r
@@ -128,7 +132,35 @@ var_list[["longitude"]]
 It returns the element in the same form as they were insert (list, matrix, array, etc.)
 
 ## Polygons in gslcoenv
+The package works well with 'sf' or 'sfc' class of polygon create by [sf package](https://r-spatial.github.io/sf/).<br>
+Some functions to play with polygons are provided here:
+
+* create_poly, which create a polygon using a list of coordinates
+* import_poly, import polygon from a .Rdata or .csv file
+* save_poly, save polygon in a .Rdata or .csv file
+* show_poly, show polygon on a map 
+
+## Environmental Data
+The data available here come from observations sampled during different oceanographic campaigns, such as AZMP, nGSL and helicopter survey.
+The observations go through rigorous quality control (UNESCO et al. 1990) by the IML - DAISS Data mangement section and are pooled into different times sections (March, June, August, October) depending of the sampling date.
+A regular 2 km grid are produced by interpolating the observations in each time sections for every year, although some variables like ice_thickness are yearly produced .
+
+Data team :
+
+* Peter Galbraith (Peter.Glarbraith@dfo-mpo.gc.ca) generates the interpolated grid from the observations
+* Jean-Luc Shaw (Jean-Luc.Shaw@dfo-mpo.gc.ca) maintains and updates the data on a yearly basis
 
 ## Troubleshooting
+1. Make sure the version of R is 3.5.0 or newer, and the packages are all up to date. If you are using a computer from DFO-MPO, you will need to start RStudio with Privilege Management to update the version of R and its packages.
+2. Each function as in bedded documentation, you can easily access it by typing help in the console with the function in parentheses
+``` r
+help(function_name)
+``` 
+3. If you encounter any problem, feel free to open an issue on the package Github page [BStDenis/gslcoenv](https://github.com/BSt-Denis/gslcoenv/).
 
-1. Make sure the version of R is 3.5.0 or newer, and the packages are all up to date. If you are using a computer from DFO-MPO, you will need to start RStudio with admin privileges with Avecto to update the version of R and its packages.
+## Contributing
+Contributions are welcome!
+You can open an issue if you want to contribute or have ideas for new features.
+
+## License
+This package is licensed under the GNU General Public License (GPL-3.0). See LICENSE.md for details.
