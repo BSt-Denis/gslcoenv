@@ -1,3 +1,5 @@
+
+
 ###############################################################################
 # viz_ts
 #' @title Visualize time series
@@ -47,9 +49,10 @@ viz_map <- function(data, var_list){
     colorname = "haline"
     coldir=-1
 
-  } else if(ds$nc_var %in% c('lshw_layer_thickness','CIL3','CIL2','CIL1','CIL0')){
+  } else if(var_list$nc_var %in% c('lshw_layer_thickness','CIL3','CIL2','CIL1','CIL0')){
     colorname = "deep"
     coldir = 1
+
   } else{
     print("Element nc_var in var_list is unrecognized")
     colorname = "thermal"
@@ -66,15 +69,22 @@ viz_map <- function(data, var_list){
   # Plotting
   ggplot2::ggplot(data = world) +
     ggplot2::geom_sf(fill ="antiquewhite") +
-    ggplot2::coord_sf(xlim = c(min(var_list$longitude)-0.07, max(var_list$longitude)+0.07),
-                      ylim = c(min(var_list$latitude)-0.05, max(var_list$latitude)+0.05), expand = TRUE)+
+    ggplot2::coord_sf(xlim = c(min(var_list$longitude)-0.07,
+                               max(var_list$longitude)+0.07),
+                      ylim = c(min(var_list$latitude)-0.05,
+                               max(var_list$latitude)+0.05), expand = TRUE)+
     # Contour filled
-    ggplot2::geom_contour_filled(data = df, ggplot2::aes(x=longitude, y=latitude, z=data))+
-    cmocean::scale_fill_cmocean(name = colorname, discrete = TRUE, direction = coldir) +
+    ggplot2::geom_contour_filled(data = df,
+                                 ggplot2::aes(x = longitude,
+                                              y = latitude,
+                                              z = data))+
+    cmocean::scale_fill_cmocean(name = colorname, discrete = TRUE,
+                                direction = coldir) +
 
     # Add grid
     ggplot2::theme(
-      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5), linetype = "dashed", linewidth = 0.5)) +
+      panel.grid.major = ggplot2::element_line(color = grDevices::gray(.5),
+                                               linetype = "dashed", linewidth = 0.5)) +
     ggplot2::guides(fill=ggplot2::guide_legend(title=var_list$units))
 
 }
