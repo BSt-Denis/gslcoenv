@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 <!-- badges: start -->
 
 <!-- badges: end -->
@@ -174,7 +168,7 @@ ice_thickness are yearly produced .
 Data team :
 
 -   Peter Galbraith
-    ([Peter.Glarbraith\@dfo-mpo.gc.ca](mailto:Peter.Glarbraith@dfo-mpo.gc.ca){.email})
+    ([Peter.Galbraith\@dfo-mpo.gc.ca](mailto:Peter.Galbraith@dfo-mpo.gc.ca){.email})
     generates the interpolated grid from the observations
 -   Jean-Luc Shaw
     ([Jean-Luc.Shaw\@dfo-mpo.gc.ca](mailto:Jean-Luc.Shaw@dfo-mpo.gc.ca){.email})
@@ -199,8 +193,8 @@ help(function_name)
 
 ## Contributing
 
-Contributions are welcome! You can open an issue if you want to
-contribute or have ideas for new features.
+Contributions are welcome!
+You can open an issue if you want to contribute or have ideas for new features.<br>
 
 ## License
 
