@@ -162,7 +162,7 @@ list_nc <- function(){
   #Get path to data folder
   data_path <- yaml::read_yaml(parameter_file)$data_path
 
-  # Get the file name present in data folder- test
+  # Get the file name present in data folder
   flist <- list.files(data_path, pattern = "\\.nc$")
 
   # Stop function if no file is found
