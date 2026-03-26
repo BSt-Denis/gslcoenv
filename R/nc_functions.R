@@ -276,8 +276,25 @@ doc_nc <- function(varname, path_to_data = NULL) {
   global_atts <- ncdf4::ncatt_get(nc, 0)
   ncdf4::nc_close(nc)
 
-  # Pretty-print
-  cat("Global attributes of", filename, ":\n")
+  # Pretty-print readme block if present
+  if ("readme" %in% names(global_atts)) {
+    readme_items <- trimws(strsplit(global_atts[["readme"]], ";")[[1]])
+    readme_items <- readme_items[nchar(readme_items) > 0]
+    frame <- strrep("=", 80)
+    pad   <- floor((80 - nchar("README")) / 2)
+    cat("\n", frame, "\n", sep = "")
+    cat(strrep(" ", pad), "README\n", sep = "")
+    cat(frame, "\n\n", sep = "")
+    for (item in readme_items) {
+      lines <- strwrap(item, width = 80, initial = "* ", prefix = "  ")
+      cat(paste(lines, collapse = "\n"), "\n", sep = "")
+    }
+    cat("\n", frame, "\n\n", sep = "")
+    global_atts[["readme"]] <- NULL
+  }
+
+  # Pretty-print global attributes
+  cat("Global attributes of", filename, ":\n\n")
   for (att_name in names(global_atts)) {
     if (att_name == "references") {
       refs <- trimws(strsplit(global_atts[[att_name]], ";")[[1]])
@@ -290,6 +307,7 @@ doc_nc <- function(varname, path_to_data = NULL) {
       cat(sprintf("  %s: %s\n", att_name, global_atts[[att_name]]))
     }
   }
+  cat("\n")
 
   invisible(global_atts)
 }
