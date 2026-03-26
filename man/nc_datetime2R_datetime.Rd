@@ -7,12 +7,12 @@
 nc_datetime2R_datetime(nc)
 }
 \arguments{
-\item{nc}{A ncdf4 object}
+\item{nc}{ncdf4 object}
 }
 \value{
 Numeric Second since epoch time 1970-01-01
 }
 \description{
-This function doubles a number. It is not exported.
+This function is not exported.
 }
 \keyword{internal}

@@ -2,6 +2,7 @@
 
 export(bymonth_var)
 export(create_poly)
+export(doc_nc)
 export(indistance_var)
 export(info_var)
 export(inpolygon_var)
