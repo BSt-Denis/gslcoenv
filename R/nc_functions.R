@@ -279,7 +279,16 @@ doc_nc <- function(varname, path_to_data = NULL) {
   # Pretty-print
   cat("Global attributes of", filename, ":\n")
   for (att_name in names(global_atts)) {
-    cat(sprintf("  %s: %s\n", att_name, global_atts[[att_name]]))
+    if (att_name == "references") {
+      refs <- trimws(strsplit(global_atts[[att_name]], ";")[[1]])
+      refs <- refs[nchar(refs) > 0]
+      cat(sprintf("  %s:\n", att_name))
+      for (ref in refs) {
+        cat(sprintf("    %s\n", ref))
+      }
+    } else {
+      cat(sprintf("  %s: %s\n", att_name, global_atts[[att_name]]))
+    }
   }
 
   invisible(global_atts)
