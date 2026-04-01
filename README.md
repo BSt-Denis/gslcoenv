@@ -60,8 +60,7 @@ doc_nc('variable_name')
 ```
 
 R will print the global metadata about the dataset this variable belongs to
-and any notes or caveats the package/data maintainers want users to be
-aware of..
+and any notes or caveats of which users should be aware.
 
 ## Example
 
@@ -70,6 +69,9 @@ This is an example showing the basic functionality of gslcoenv:
 ``` r
 # Import package gslcoenv into the working environment if not already imported
 library(gslcoenv)
+
+# Check variable notes and metadata
+doc_nc("bottom_temperature")
 
 # Import data from the netCDF file
 var_list = read_nc("bottom_temperature")
