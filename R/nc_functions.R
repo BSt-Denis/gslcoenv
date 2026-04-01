@@ -238,6 +238,8 @@ list_nc <- function(){
 #' @return Invisibly returns the named list of global attributes.
 #' @export
 #'
+#' @author Jean-Luc Shaw
+#'
 #' @examples
 #' \dontrun{doc_nc("bottom_temperature")}
 #'
