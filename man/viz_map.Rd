@@ -7,12 +7,12 @@
 viz_map(data, var_list)
 }
 \arguments{
-\item{data}{name of variable to plot}
+\item{data}{2-D array (longitude, latitude) of the data to plot,}
 
 \item{var_list}{var_list containing coordinates and dimensions of the data}
 }
 \description{
-Create a map displaying the data on the estuary with a colormap
+Create a map displaying the data on the map with a colormap
 from the \code{\link[cmocean]{cmocean}} package.
 }
 \examples{

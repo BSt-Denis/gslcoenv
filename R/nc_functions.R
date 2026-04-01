@@ -225,5 +225,89 @@ list_nc <- function(){
 }
 
 #===============================================================================
-# nouvelle_fonction
+# doc_nc
+#' @title Print global attributes of a NetCDF file
+#'
+#' @description Find the NetCDF file containing the given variable and
+#' pretty-print its global attributes.
+#'
+#' @param varname Name of the variable whose source file will be inspected.
+#' @param path_to_data Default = NULL. Path to the data directory.
+#' If NULL, the path stored in the package internal file is used.
+#'
+#' @return Invisibly returns the named list of global attributes.
+#' @export
+#'
+#' @examples
+#' \dontrun{doc_nc("bottom_temperature")}
+#'
+doc_nc <- function(varname, path_to_data = NULL) {
+  # Check for path_to_data argument
+  if (is.null(path_to_data)) {
+    path_to_data <- yaml::read_yaml(system.file("extdata", "pkg_parameters.yaml", package = "gslcoenv"))$data_path
+  }
 
+  # Find NetCDF files in folder
+  file_list <- list.files(path_to_data, pattern = "\\.nc$")
+
+  # Stop if no file is found
+  if (length(file_list) == 0) {
+    stop(paste0("No netCDF file in directory: ", path_to_data))
+  }
+
+  # Find the file containing varname
+  file_counter <- 0
+  for (filename in file_list) {
+    nc <- ncdf4::nc_open(paste0(path_to_data, filename))
+    if (varname %in% names(nc$var)) {
+      break
+    } else {
+      ncdf4::nc_close(nc)
+      file_counter <- file_counter + 1
+    }
+  }
+
+  # Stop if varname was not found
+  if (file_counter == length(file_list)) {
+    stop(paste0("Varname: ", varname, " not found in folder: ", path_to_data))
+  }
+
+  # Get global attributes
+  global_atts <- ncdf4::ncatt_get(nc, 0)
+  ncdf4::nc_close(nc)
+
+  # Pretty-print readme block if present
+  if ("readme" %in% names(global_atts)) {
+    readme_items <- trimws(strsplit(global_atts[["readme"]], ";")[[1]])
+    readme_items <- readme_items[nchar(readme_items) > 0]
+    frame <- strrep("=", 80)
+    pad   <- floor((80 - nchar("README")) / 2)
+    cat("\n", frame, "\n", sep = "")
+    cat(strrep(" ", pad), "README\n", sep = "")
+    cat(frame, "\n\n", sep = "")
+    for (item in readme_items) {
+      lines <- strwrap(item, width = 80, initial = "* ", prefix = "  ")
+      cat(paste(lines, collapse = "\n"), "\n", sep = "")
+    }
+    cat("\n", frame, "\n\n", sep = "")
+    global_atts[["readme"]] <- NULL
+  }
+
+  # Pretty-print global attributes
+  cat("Global attributes of", filename, ":\n\n")
+  for (att_name in names(global_atts)) {
+    if (att_name == "references") {
+      refs <- trimws(strsplit(global_atts[[att_name]], ";")[[1]])
+      refs <- refs[nchar(refs) > 0]
+      cat(sprintf("  %s:\n", att_name))
+      for (ref in refs) {
+        cat(sprintf("    %s\n", ref))
+      }
+    } else {
+      cat(sprintf("  %s: %s\n", att_name, global_atts[[att_name]]))
+    }
+  }
+  cat("\n")
+
+  invisible(global_atts)
+}
