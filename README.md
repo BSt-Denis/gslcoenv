@@ -52,6 +52,17 @@ list_nc()
 R will print the variable names along with useful information on the
 data it found.
 
+4.  Check the metadata and notes about the variable you intend to use
+
+``` r
+# Check metadata and notes
+doc_nc('variable_name')
+```
+
+R will print the global metadata about the dataset this variable belongs to
+and any notes or caveats the package/data maintainers want users to be
+aware of..
+
 ## Example
 
 This is an example showing the basic functionality of gslcoenv:
