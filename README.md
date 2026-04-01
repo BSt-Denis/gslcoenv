@@ -193,7 +193,7 @@ Data team :
     all up to date. If you are using a computer from DFO-MPO, you will
     need to start RStudio with privilege management to update the
     version of R and its packages.
-2.  Each function has inbedded documentation, you can easily access it
+2.  Each function has imbedded documentation, you can easily access it
     by typing help in the console with the function in parentheses
 
 ``` r
